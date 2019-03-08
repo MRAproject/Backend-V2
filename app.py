@@ -1,14 +1,14 @@
-from flask import Flask, request
+from flask import Flask
 from flask_cors import CORS
-from api.get_user import get_user
+from api.login import login
 
 app = Flask(__name__)
 CORS(app)
 
 
-@app.route('/amit', methods=['GET'])
-def amit():
-    return get_user()
+@app.route('/login', methods=['POST'])
+def login_route():
+    return login()
 
 
 if __name__ == '__main__':
