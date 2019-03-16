@@ -5,6 +5,7 @@ from api.get_all_user_cars import get_all_user_cars
 from api.add_car import add_car
 from api.remove_car import remove_car
 from api.edit_user import edit_user
+from api.check_car import check_car
 
 app = Flask(__name__)
 CORS(app)
@@ -33,6 +34,11 @@ def remove_car_route():
 @app.route('/edit_user', methods=['POST'])
 def edit_user_route():
     return edit_user()
+
+
+@app.route('/check_car', methods=['GET'])
+def check_car_route():
+    return check_car()
 
 
 if __name__ == '__main__':
