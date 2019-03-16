@@ -8,8 +8,14 @@ def add_car():
     db = sqlite3.connect('db.db')
     cur = db.cursor()
     cur.execute('INSERT INTO Cars (username,carNumber,isInside) VALUES (?,?,?)', (username, car_number, 0))
-    db.commit()
-    db.close()
+    try:
+        db.commit()
+    except Exception as e:
+        print(e)
+        return jsonify({'message': 'car number is alreday exist',
+                        'status': 'failed'})
+    finally:
+        db.close()
     return jsonify({'message': 'car added',
                     'status': 'successful',
                     'carNumber': car_number,

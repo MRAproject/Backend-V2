@@ -3,6 +3,7 @@ from flask_cors import CORS
 from api.login import login
 from api.get_all_user_cars import get_all_user_cars
 from api.add_car import add_car
+from api.remove_car import remove_car
 
 app = Flask(__name__)
 CORS(app)
@@ -21,6 +22,11 @@ def get_all_user_cars_route():
 @app.route('/add_car', methods=['POST'])
 def add_car_route():
     return add_car()
+
+
+@app.route('/remove_car', methods=['POST'])
+def remove_car_route():
+    return remove_car()
 
 
 if __name__ == '__main__':
