@@ -12,7 +12,7 @@ def login():
     user = cur.fetchone()
     status = 'authorized' if user is not None else 'unauthorized'
     db.close()
-    return jsonify({"body": request.json, "status": status})
+    return jsonify({"body": user, "status": status})
 
 # cur.execute("INSERT INTO Users (username,password,firstName,lastName,capacity) VALUES(?, ?, ?, ?,?)",
 #            ('amitmarko', '12345', 'amit', 'markovich', 100))

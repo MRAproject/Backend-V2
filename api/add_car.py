@@ -7,8 +7,8 @@ def add_car():
     car_number = request.json['carNumber']
     db = sqlite3.connect('db.db')
     cur = db.cursor()
-    cur.execute('INSERT INTO Cars (username,carNumber,isInside) VALUES (?,?,?)', (username, car_number, 0))
     try:
+        cur.execute('INSERT INTO Cars (username,carNumber,isInside) VALUES (?,?,?)', (username, car_number, 0))
         db.commit()
     except Exception as e:
         print(e)
