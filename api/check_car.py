@@ -1,10 +1,13 @@
 from flask import request, jsonify
 from datetime import datetime
 import sqlite3
+import base64
 
 
 def check_car():
-    car_number = request.args.get('carNumber')
+    image = request.args.get('carNumber')
+    img_data = base64.b64decode(str(image))
+
     db = sqlite3.connect('db.db')
     cur = db.cursor()
     cur.execute('SELECT * FROM Cars WHERE carNumber = ?', (car_number,))
