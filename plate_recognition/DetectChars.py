@@ -3,9 +3,9 @@ import cv2
 import numpy as np
 import math
 import random
-import Main
-import Preprocess
-import PossibleChar
+import plate_recognition.Main as Main
+import plate_recognition.Preprocess as Preprocess
+import plate_recognition.PossibleChar as PossibleChar
 
 kNearest = cv2.ml.KNearest_create()
 
@@ -43,7 +43,7 @@ def loadKNNDataAndTrainKNN():
     validContoursWithData = []  # we will fill these shortly
 
     try:
-        npaClassifications = np.loadtxt("classifications.txt", np.float32)  # read in training classifications
+        npaClassifications = np.loadtxt("plate_recognition/classifications.txt", np.float32)  # read in training classifications
     except:  # if file could not be opened
         print("error, unable to open classifications.txt, exiting program\n")  # show error message
         os.system("pause")
@@ -51,7 +51,7 @@ def loadKNNDataAndTrainKNN():
     # end try
 
     try:
-        npaFlattenedImages = np.loadtxt("flattened_images.txt", np.float32)  # read in training images
+        npaFlattenedImages = np.loadtxt("plate_recognition/flattened_images.txt", np.float32)  # read in training images
     except:  # if file could not be opened
         print("error, unable to open flattened_images.txt, exiting program\n")  # show error message
         os.system("pause")

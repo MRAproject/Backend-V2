@@ -1,13 +1,16 @@
 import cv2
 import numpy as np
 import math
-import Main
+import plate_recognition.Main as Main
+
 import random
 
-import Preprocess
-import DetectChars
-import PossiblePlate
-import PossibleChar
+import plate_recognition.Preprocess as Preprocess
+import plate_recognition.DetectChars as DetectChars
+import plate_recognition.PossiblePlate as PossiblePlate
+import plate_recognition.PossibleChar as PossibleChar
+
+
 
 PLATE_WIDTH_PADDING_FACTOR = 1.3
 PLATE_HEIGHT_PADDING_FACTOR = 1.5
@@ -98,7 +101,10 @@ def detectPlatesInScene(imgOriginalScene):
         # end if
     # end for
 
+    print(listOfPossiblePlates)
     print("\n" + str(len(listOfPossiblePlates)) + " possible plates found")  # 13 with MCLRNF1 image
+    if (len(listOfPossiblePlates)) == 0:
+        return None
 
     if Main.showSteps == True:  # show steps #######################################################
         print("\n")

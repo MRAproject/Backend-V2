@@ -1,7 +1,8 @@
 import cv2
 import os
-import DetectChars
-import DetectPlates
+import plate_recognition.DetectChars as DetectChars
+import plate_recognition.DetectPlates as DetectPlates
+import numpy as np
 
 SCALAR_BLACK = (0.0, 0.0, 0.0)
 SCALAR_WHITE = (255.0, 255.0, 255.0)
@@ -12,7 +13,7 @@ SCALAR_RED = (0.0, 0.0, 255.0)
 showSteps = False
 
 
-def main():
+def main(img):
     blnKNNTrainingSuccessful = DetectChars.loadKNNDataAndTrainKNN()  # attempt KNN training
 
     if blnKNNTrainingSuccessful == False:  # if KNN training was not successful
@@ -20,7 +21,7 @@ def main():
         return  # and exit program
     # end if
 
-    imgOriginalScene = cv2.imread("Photos/hyundai.jpeg")  # open image
+    imgOriginalScene = cv2.imread('some_image.jpg')  # open image
 
     if imgOriginalScene is None:  # if image was not read successfully
         print("\nerror: image not read from file \n\n")  # print error message to std out
@@ -29,11 +30,12 @@ def main():
     # end if
 
     listOfPossiblePlates = DetectPlates.detectPlatesInScene(imgOriginalScene)  # detect plates
-
+    if listOfPossiblePlates is None:
+        return None
     listOfPossiblePlates = DetectChars.detectCharsInPlates(listOfPossiblePlates)  # detect chars in plates
 
     cv2.imshow("imgOriginalScene", imgOriginalScene)  # show scene image
-
+    licPlate = ''
     if len(listOfPossiblePlates) == 0:  # if no plates were found
         print("\nno license plates were detected\n")  # inform user no plates were found
     else:  # else
@@ -48,7 +50,6 @@ def main():
         cv2.imshow("imgPlate", licPlate.imgPlate)  # show crop of plate and threshold of plate
         cv2.imshow("imgThresh", licPlate.imgThresh)
 
-        cv2.waitKey(0)
         if len(licPlate.strChars) == 0:  # if no chars were found in the plate
             print("\nno characters were detected\n\n")  # show message
             return  # and exit program
@@ -67,9 +68,7 @@ def main():
 
     # end if else
 
-    cv2.waitKey(0)  # hold windows open until user presses a key
-
-    return
+    return licPlate.strChars
 
 
 def drawRedRectangleAroundPlate(imgOriginalScene, licPlate):
