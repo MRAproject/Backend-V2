@@ -12,7 +12,7 @@ def add_car():
         db.commit()
     except Exception as e:
         print(e)
-        return jsonify({'message': 'car number is alreday exist',
+        return jsonify({'message': f'Car number {car_number} is alreday exist',
                         'status': 'failed'})
     finally:
         db.close()
